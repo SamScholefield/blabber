@@ -57,7 +57,7 @@ var BlabberClient = (function (override_options) {
 
     socket.onConnect = function (username) {
         // $(options.selectors.conversation).html('');
-        $(options.selectors.connect_btn).removeClass('disconnected').addClass('connected');
+        $(options.selectors.connect_btn).removeClass('disconnected').addClass('connected').find('span').text('Connected');
         options.onConnect(username);
     }
 
@@ -78,6 +78,7 @@ var BlabberClient = (function (override_options) {
 
     socket.onDisconnect = function () {
         appendMessage('SERVER', 'Disconnected');
+        $(options.selectors.connect_btn).removeClass('connected').addClass('disconnected').find('span').text('Disconnected');
         options.onDisconnect();
     }
 
@@ -266,7 +267,6 @@ var BlabberSocket = (function (server_url) {
         if (!username || typeof username !== 'string') {
             return false;
         }
-
 
         if (socket) {
             socket = io.connect(server_url, { 'force new connection': true });
